@@ -7,18 +7,35 @@ use App\Categoria\Domain\Categoria;
 
 class MemoryCategoriaRepository implements CategoriaRepositoryInterface
 {
-    private static array $categories = [];
+    public function __construct()
+    {
+        if (!isset($_SESSION['categories'])) {
+            $_SESSION['categories'] = [];
+        }
+    }
 
     public function save(Categoria $categorie):void
     {
         $new_id = uniqid();
-        $categorie->getId($new_id);
+        $categorie->setId($new_id);
 
-        self::$categories[] = $categorie;
-    }
+        $_SESSION['categories'][] = $categorie;
+    }   
 
     public function listAll(): array
     {
-        return self::$categories;
+        return $_SESSION['categories'];
+    }
+    public function getById(string $id): ?Categoria
+    {
+        foreach($_SESSION['categories'] as $categorie)
+            {
+                if ($categorie->getId() === $id)
+                    {
+                        return $categorie;
+                    }
+                    
+            }
+        return null;
     }
 }

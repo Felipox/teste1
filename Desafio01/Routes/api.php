@@ -9,6 +9,19 @@ if ( ($method === 'POST') && ($url === '/categorias')){
     $controller->create();
     exit;
 }
+if(($method === 'GET') && ($url === '/categorias')){
+    $controller = new CategoriaController();
+    
+    if(isset($_GET['id']))
+        {
+            $controller->getById();
+        }
+    else
+        {
+            $controller->listAll();
+        }
+    exit;
+    }
 if(($method === 'POST') && ($url === '/pedidos')){
     $controller = new PedidosController();
     $controller->create();

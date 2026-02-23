@@ -1,7 +1,10 @@
 <?php
 
+namespace App\Categoria\UseCases;
+
 use App\Categoria\CategoriaRepositoryInterface;
 use App\Categoria\Domain\Categoria;
+use Exception;
 
 class CreateCategoriaUseCase
 {
