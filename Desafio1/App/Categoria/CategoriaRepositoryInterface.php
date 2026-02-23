@@ -11,4 +11,5 @@ Interface CategoriaRepositoryInterface
     function getById(string $id): ?Categoria;
 
     function update($updated_category);
+    function delete(string $id);
 }
