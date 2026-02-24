@@ -2,6 +2,7 @@
 
 namespace Interfaces\Http;
 
+use App\Pedidos\Domain\Infrastructure\MemoryPedidosRepository;
 use App\Produto\Domain\Infrastructure\MemoryProdutoRepository;
 use App\Produto\UseCases\CreateProdutoUseCase;
 use App\Categoria\Infrastructure\MemoryCategoriaRepository;
@@ -126,8 +127,9 @@ class ProdutoController
         {
             $received_id = $_GET['id'];
 
-            $repository = new MemoryProdutoRepository();
-            $use_case = new DeleteProdutoUseCase($repository);
+            $product_repository = new MemoryProdutoRepository();
+            $order_repository = new MemoryPedidosRepository();
+            $use_case = new DeleteProdutoUseCase($product_repository, $order_repository);
 
             $use_case->execute($received_id);
 

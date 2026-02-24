@@ -2,6 +2,7 @@
 
 namespace Interfaces\Http;
 
+use App\Movimentacao\Infrastructure\MemoryMovimentacaoRepository;
 use App\Pedidos\Domain\Infrastructure\MemoryPedidosRepository;
 use App\Pedidos\UseCases\CreatePedidosUseCase;
 use App\Pedidos\UseCases\GetPedidoByIdUseCase;
@@ -19,7 +20,8 @@ class PedidosController
         {
             $order_repository = new MemoryPedidosRepository();
             $product_repository = new MemoryProdutoRepository();
-            $use_case = new CreatePedidosUseCase($order_repository, $product_repository);
+            $moviment_repository = new MemoryMovimentacaoRepository();
+            $use_case = new CreatePedidosUseCase($order_repository, $product_repository, $moviment_repository);
             
             $use_case->execute($content);
 
