@@ -33,7 +33,30 @@ use Interfaces\Http\ProdutoController;
         {
             $controller = new CategoriaController();
             $controller->update($content);
+            exit;
         }
+
+    if(($method === 'DELETE') && ($url === '/categorias'))
+        {
+            $controller = new CategoriaController();
+            $controller->delete();
+            exit;
+        }
+
+
+
+        
+
+        if(($method === 'POST') && ($url === '/produtos'))
+        {
+        $controller = new ProdutoController();
+        $controller->create();
+        exit;
+        }
+
+
+
+        
 
     if(($method === 'POST') && ($url === '/pedidos'))
     {
@@ -42,12 +65,6 @@ use Interfaces\Http\ProdutoController;
     exit;
     }
 
-    if(($method === 'POST') && ($url === '/produtos'))
-    {
-    $controller = new ProdutoController();
-    $controller->create();
-    exit;
-    }
 
 http_response_code(404);
 echo json_encode(["Erro"=>"Rota nao encontrada."]);

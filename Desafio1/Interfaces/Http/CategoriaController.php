@@ -3,6 +3,7 @@ namespace Interfaces\Http;
 
 use App\Categoria\Infrastructure\MemoryCategoriaRepository;
 use App\Categoria\UseCases\CreateCategoriaUseCase;
+use App\Categoria\UseCases\DeleteCategoriaUseCase;
 use App\Categoria\UseCases\UpdateCategoriaUseCase;
 use Exception;
 use App\Categoria\UseCases\ListCategoriaUseCase;
@@ -94,7 +95,7 @@ class CategoriaController
         {
             $received_id = $_GET['id'];
 
-            $received_name = $_GET['name'] ?? '';
+            $received_name = $content_received['name'] ?? '';
 
             $repository = new MemoryCategoriaRepository();
             $use_case = new UpdateCategoriaUseCase($repository);
@@ -103,6 +104,27 @@ class CategoriaController
 
             http_response_code(200);
             echo json_encode(["Sucesso: Categoria atualizada com sucesso"]);
+        }
+        catch(Exception $e)
+        {
+            http_response_code($e->getCode());
+            echo json_encode(["Erro"=> $e->getMessage()]);
+        }
+    }
+
+    public function delete():void
+    {
+        try
+        {
+            $received_id = $_GET['id'];
+
+            $repository = new MemoryCategoriaRepository();
+            $use_case = new DeleteCategoriaUseCase($repository);
+
+            $use_case->execute($received_id);
+
+            http_response_code(200);
+            echo json_encode(["Sucesso: Categoria deletada com sucesso"]);
         }
         catch(Exception $e)
         {

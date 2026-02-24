@@ -50,4 +50,17 @@ class MemoryCategoriaRepository implements CategoriaRepositoryInterface
                     }
             }
     }
+
+    public function delete(string $id):void
+    {
+        foreach($_SESSION['category'] as $index => $category)
+            {
+                if($category->getId() === $id)
+                    {
+                        unset($_SESSION['category'][$index]);
+                        $_SESSION['category'] = array_values($_SESSION['category']);
+                        break;            
+                    }
+            }
+    }
 }
