@@ -13,7 +13,7 @@ class GetCategoriaByIdUseCase
         $this->repository = $repository;
     }
 
-    function execute(string $id): Categoria
+    public function execute(string $id): Categoria
     {
         $found_category = $this->repository->getById($id);
         if($found_category === null)

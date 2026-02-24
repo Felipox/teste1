@@ -84,7 +84,7 @@ class CategoriaController
             echo json_encode($answer);
         }catch (Exception $e)
         {
-            http_response_code($e->getCode());
+            http_response_code($e->getCode()?:500);
             echo json_encode(["Erro" => $e->getMessage()]);
         }
     }
@@ -107,7 +107,7 @@ class CategoriaController
         }
         catch(Exception $e)
         {
-            http_response_code($e->getCode());
+            http_response_code($e->getCode()?:500);
             echo json_encode(["Erro"=> $e->getMessage()]);
         }
     }
@@ -128,7 +128,7 @@ class CategoriaController
         }
         catch(Exception $e)
         {
-            http_response_code($e->getCode());
+            http_response_code($e->getCode()?:500);
             echo json_encode(["Erro"=> $e->getMessage()]);
         }
     }

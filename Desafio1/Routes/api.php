@@ -45,12 +45,26 @@ use Interfaces\Http\ProdutoController;
 
 
 
-        
+
 
         if(($method === 'POST') && ($url === '/produtos'))
         {
         $controller = new ProdutoController();
-        $controller->create();
+        $controller->create($content);
+        exit;
+        }
+
+        if(($method === 'GET') && ($url === '/produtos'))
+            {
+            $controller = new ProdutoController();
+            if(isset($_GET['id']))
+            {
+            $controller->getById();
+            }
+            else
+            {
+            $controller->listAll();
+            }
         exit;
         }
 

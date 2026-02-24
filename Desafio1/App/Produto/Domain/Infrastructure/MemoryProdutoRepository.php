@@ -34,8 +34,8 @@ class MemoryProdutoRepository implements ProdutoRepositoryInterface
                     {
                         return $product;
                     }
-                    return null;
             }
+            return null;
     }
 
     public function update(Produto $updated_product):void

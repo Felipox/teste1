@@ -19,7 +19,7 @@ class CreateProdutoUseCase
         $this->category_repository = $category_repository;
     }
 
-    public function execute(string $name, string $product_id, string $category_id, int $price, int $quantity):void
+    public function execute(string $name, string $category_id, int $price, int $quantity):void
     {
         
             if($name === '')
@@ -34,9 +34,15 @@ class CreateProdutoUseCase
                 {
                     throw new Exception("Erro: Quantidade do produto deve ser maior que zero", 400);
                 }
-        
-        $product = new Produto($name, $price, $category_id, $quantity, $product_id);
-        $this->repository->save($product);
+            
+            $category = $this->category_repository->getById($category_id);
+            if($category === null)
+                {
+                    throw new Exception("Erro: Categoria nao encontrada", 404);
+                }
+
+        $product = new Produto($name, $price, $category_id, $quantity);
+        $this->repository_product->save($product);
         
     }
 }
