@@ -89,7 +89,7 @@ use Interfaces\Http\ProdutoController;
     if(($method === 'POST') && ($url === '/pedidos'))
     {
     $controller = new PedidosController();
-    $controller->create();
+    $controller->create($content);
     exit;
     }
 

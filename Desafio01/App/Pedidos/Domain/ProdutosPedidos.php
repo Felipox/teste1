@@ -9,7 +9,7 @@ class ProdutosPedidos
     private int $quantity;
     private int $unit_price;
 
-    public function __construct(string $order_id, string $product_id, int $quantity, int $unit_price)
+    public function __construct(string $order_id="", string $product_id, int $quantity, int $unit_price)
     {
         $this->order_id = $order_id;
         $this->product_id = $product_id;

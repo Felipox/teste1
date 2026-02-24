@@ -8,7 +8,7 @@ class Pedidos
     private string $date_time;
     private array $products_orders;
 
-    public function __construct(string $id, string $date_time, array $products_orders)
+    public function __construct(string $id="", string $date_time="", array $products_orders)
     {
         $this->id = $id;
         $this->date_time = $date_time !== "" ? $date_time : date("Y-m-d H:i:s");

@@ -4,6 +4,8 @@ namespace App\Pedidos\UseCases;
 
 use App\Pedidos\PedidosRepositoryInterface;
 use App\Produto\ProdutoRepositoryInterface;
+use App\Pedidos\Domain\ProdutosPedidos;
+use App\Pedidos\Domain\Pedidos;
 use Exception;
 
 class CreatePedidosUseCase
@@ -35,27 +37,29 @@ class CreatePedidosUseCase
 
                 $product = $this->product_repository->getById($item['product_id']);
                 
+                if($product === null)
+                    {
+                        throw new Exception("Erro: ID do produto nao encontrado", 404);
+                    }
                 if($item['quantity'] > $product->getQuantity())
                     {
                         throw new Exception("Erro: Quantidade do produto excede o estoque disponível", 400);
                     }
 
 
-                if($product === null)
-                    {
-                        throw new Exception("Erro: ID do produto nao encontrado", 404);
-                    }
 
                 $new_quantity = $product->getQuantity() - $item['quantity'];
                 $product->setQuantity($new_quantity);
                 $this->product_repository->update($product);
 
-                $list_products_orders = new ProdutosPedidos(
+                $list_products_orders[] = new ProdutosPedidos(
                     product_id: $item['product_id'],
                     quantity: $item['quantity'],
-                    price: $product->getPrice()
+                    unit_price: $product->getPrice()
                 );
-                 
-            }
+                }
+                $new_order = new Pedidos(products_orders:$list_products_orders);
+                $this->order_repository->save($new_order);
+                
     }
 }   
