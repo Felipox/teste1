@@ -74,6 +74,13 @@ use Interfaces\Http\ProdutoController;
                 $controller->update($content);
                 exit;
             }
+        
+        if(($method === 'DELETE') && ($url === '/produtos'))
+        {
+            $controller = new ProdutoController();
+            $controller->delete();
+            exit;
+        }
 
 
 

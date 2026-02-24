@@ -10,7 +10,7 @@ class Produto
     private string $category_id;
     private int $product_quantity;
 
-    function __construct(string $product_name, int $product_price, string $category_id, int $product_quantity, string $id="")
+    public function __construct(string $product_name, int $product_price, string $category_id, int $product_quantity, string $id="")
     {
         $this->product_id = $id;
         $this->product_name = $product_name;

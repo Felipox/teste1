@@ -8,6 +8,7 @@ use App\Categoria\Infrastructure\MemoryCategoriaRepository;
 use App\Produto\UseCases\ListProdutoUseCase;
 use App\Produto\UseCases\GetProdutoByIdUseCase;
 use App\Produto\UseCases\UpdateProdutoUseCase;
+use App\Produto\UseCases\DeleteProdutoUseCase;
 use Exception;
 
 class ProdutoController
@@ -98,17 +99,45 @@ class ProdutoController
         {
             $received_id = $_GET['id'];
 
-            $repository = new MemoryProdutoRepository();
-            $use_case = new UpdateProdutoUseCase($repository);
+            $product_repository = new MemoryProdutoRepository();
+            $category_repository = new MemoryCategoriaRepository();
+            $use_case = new UpdateProdutoUseCase($product_repository, $category_repository);
 
-            $product = $use_case->execute(
-                id:$content['id'],
-                name:$content['name'],
-                category_id:$content['category_id'],
-                price:$content['price'],
-                quantity:$content['quantity']);
+            $use_case->execute(
+                id:$received_id,
+                new_name:$content['name'],
+                new_category_id:$content['category_id'],
+                new_price:$content['price'],
+                new_quantity:$content['quantity']);
 
-
+            http_response_code(200);
+            echo json_encode("Sucesso: Produto atualizado com sucesso");
+        }
+        catch (Exception $e)
+        {
+            http_response_code($e->getCode()?:500);
+            echo json_encode(["Erro" => $e->getMessage()]);
         }
     }
-}
+
+    public function delete():void
+    {
+        try
+        {
+            $received_id = $_GET['id'];
+
+            $repository = new MemoryProdutoRepository();
+            $use_case = new DeleteProdutoUseCase($repository);
+
+            $use_case->execute($received_id);
+
+            http_response_code(200);
+            echo json_encode(["Sucesso: Produto deletado com sucesso"]);
+        }
+        catch(Exception $e)
+        {
+            http_response_code($e->getCode()?:500);
+            echo json_encode(["Erro"=> $e->getMessage()]);
+        }
+    }   
+    }
