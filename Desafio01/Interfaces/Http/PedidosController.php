@@ -8,6 +8,7 @@ use App\Pedidos\UseCases\GetPedidoByIdUseCase;
 use App\Produto\Domain\Infrastructure\MemoryProdutoRepository;
 use App\Pedidos\UseCases\ListPedidosUseCase;
 use App\Pedidos\UseCases\DeletePedidosUseCase;
+use App\Pedidos\UseCases\UpdatePedidosUseCase;
 use Exception;
 
 class PedidosController
@@ -79,11 +80,11 @@ class PedidosController
             $repository = new MemoryPedidosRepository();
             $use_case = new GetPedidoByIdUseCase($repository);
 
-            $orders = $use_case->execute($received_id);
+            $order = $use_case->execute($received_id);
 
             $answer = [];
-            foreach ($orders as $order) 
-            {
+            
+            
                 $items_array = [];
                 foreach ($order->getProductsOrders() as $item) {
                     $items_array[] = [
@@ -93,13 +94,13 @@ class PedidosController
                     ];
                 }
 
-                $answer[] = [
+                $answer = [
                     "id" => $order->getId(),
                     "date_time" => $order->getDateTime(),
                     "total_price" => $order->getValorTotal(),
                     "items" => $items_array
                 ];
-            }
+            
             http_response_code(200);
             echo json_encode($answer);
         }
@@ -110,7 +111,35 @@ class PedidosController
         }
         }
 
-        public function delete()
+        public function update(array $updated_content):void
+        {
+            try
+            {
+
+            $received_id = $_GET["id"];
+            if($received_id=== '')
+                {
+                    throw new Exception("Erro: ID nao informado",400);
+                }
+
+            $order_repository = new MemoryPedidosRepository();
+            $product_repository = new MemoryProdutoRepository();
+
+            $use_case = new UpdatePedidosUseCase($order_repository,$product_repository);
+
+            $use_case->execute($received_id,$updated_content);
+
+            http_response_code(200);
+            echo json_encode(["Sucesso: Pedido atualizado com sucesso"]);
+            }
+        catch(Exception $e)
+        {
+            http_response_code($e->getCode()?:500);
+            echo json_encode(["Erro"=> $e->getMessage()]);
+        }
+        }
+
+        public function delete():void
         {
             try
             {
@@ -123,7 +152,7 @@ class PedidosController
             $use_case->execute($received_id);
 
             http_response_code(200);
-            echo json_encode(["Sucesso: Categoria deletada com sucesso"]);
+            echo json_encode(["Sucesso: Pedido deletada com sucesso"]);
             }
         catch(Exception $e)
             {

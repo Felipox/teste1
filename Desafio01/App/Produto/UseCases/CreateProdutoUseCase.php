@@ -26,13 +26,13 @@ class CreateProdutoUseCase
                 {
                     throw new Exception('Erro: Nome do produto nao pode ser vazio', 400);
                 }
-            if($price <= 0)
+            if($price < 0)
                 {
-                    throw new Exception('Erro: Preco do produto deve ser maior que zero', 400);
+                    throw new Exception('Erro: Preco do produto nao pode ser menor que zero', 400);
                 }
-            if($quantity <= 0)
+            if($quantity < 0)
                 {
-                    throw new Exception("Erro: Quantidade do produto deve ser maior que zero", 400);
+                    throw new Exception("Erro: Quantidade do produto nao pode ser menor que zero", 400);
                 }
             
             $category = $this->category_repository->getById($category_id);

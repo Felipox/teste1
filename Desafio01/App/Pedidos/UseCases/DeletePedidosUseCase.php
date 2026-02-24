@@ -13,7 +13,7 @@ class DeletePedidosUseCase
 
     public function __construct(PedidosRepositoryInterface $order_repository, ProdutoRepositoryInterface $product_repository)
     {
-        $this->repository = $order_repository;
+        $this->order_repository = $order_repository;
         $this->product_repository = $product_repository;
     }
 

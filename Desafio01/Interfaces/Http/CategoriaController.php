@@ -5,6 +5,7 @@ use App\Categoria\Infrastructure\MemoryCategoriaRepository;
 use App\Categoria\UseCases\CreateCategoriaUseCase;
 use App\Categoria\UseCases\DeleteCategoriaUseCase;
 use App\Categoria\UseCases\UpdateCategoriaUseCase;
+use App\Produto\Domain\Infrastructure\MemoryProdutoRepository;
 use Exception;
 use App\Categoria\UseCases\ListCategoriaUseCase;
 use App\Categoria\UseCases\GetCategoriaByIdUseCase;
@@ -113,8 +114,9 @@ class CategoriaController
         {
             $received_id = $_GET['id'];
 
-            $repository = new MemoryCategoriaRepository();
-            $use_case = new DeleteCategoriaUseCase($repository);
+            $category_repository = new MemoryCategoriaRepository();
+            $product_repository = new MemoryProdutoRepository();
+            $use_case = new DeleteCategoriaUseCase($category_repository, $product_repository);
 
             $use_case->execute($received_id);
 

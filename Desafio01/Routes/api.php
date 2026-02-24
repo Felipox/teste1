@@ -85,6 +85,9 @@ switch ($url) {
                 $controller->listAll();
                 } 
                 break;
+            case 'PUT':
+                $controller->update($content);
+                break;
             case 'DELETE':
                 $controller->delete();
                 break;
