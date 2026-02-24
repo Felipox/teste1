@@ -15,8 +15,8 @@ class ListCategoriaUseCase
 
     function execute(): array
     {
-        $lista = $this->repository->listAll();
+        $list = $this->repository->listAll();
 
-        return $lista;
+        return $list;
     }
 }

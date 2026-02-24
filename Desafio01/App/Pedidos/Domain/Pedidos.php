@@ -8,7 +8,7 @@ class Pedidos
     private string $date_time;
     private array $products_orders;
 
-    public function __construct(string $id="", string $date_time="", array $products_orders)
+    public function __construct(array $products_orders,string $id="", string $date_time="")
     {
         $this->id = $id;
         $this->date_time = $date_time !== "" ? $date_time : date("Y-m-d H:i:s");
@@ -40,7 +40,7 @@ class Pedidos
         $total = 0;
         foreach($this->products_orders as $product_order)
         {
-            $total += $product_order->getPrice() * $product_order->getQuantity();
+            $total += $product_order->getUnitPrice() * $product_order->getQuantity();
         }
         return $total;
     }

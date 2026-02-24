@@ -10,4 +10,5 @@ Interface PedidosRepositoryInterface
     function listAll():array;
     function getById(string $id):?Pedidos;
     function update(Pedidos $updated_order):void;
+    function delete(string $id):void;
 }
