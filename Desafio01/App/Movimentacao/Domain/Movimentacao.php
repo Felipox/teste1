@@ -2,6 +2,7 @@
 
 namespace App\Movimentacao\Domain;
 
+
 class Movimentacao
 {
     private string $id;

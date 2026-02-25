@@ -3,6 +3,7 @@
 use Interfaces\Http\CategoriaController;
 use Interfaces\Http\PedidosController;
 use Interfaces\Http\ProdutoController;
+use Interfaces\Http\MovimentacaoController;
 
 $json = file_get_contents("php://input");
 $content = json_decode($json, true) ?? []; 
@@ -97,6 +98,19 @@ switch ($url) {
                 break;
         }
         break;
+    
+    case '/movimentacoes':
+        $controller = new MovimentacaoController();
+        
+        if($method === 'GET')
+            {
+                $controller->listAll();
+            }
+            else{
+                http_response_code(404);
+                echo json_encode(["Erro: Método não permitido para Movimentações."]);
+            }
+    break;
     default:
         http_response_code(404);
         echo json_encode(["Erro Rota não encontrada."]);

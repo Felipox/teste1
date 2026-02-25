@@ -31,7 +31,7 @@ class ProdutoController
             http_response_code(201);
             echo json_encode(["Sucesso" => "Produto criado com sucesso."]);
         }
-        catch(\Exception $e)
+        catch(Exception $e)
         {
             http_response_code($e->getCode() ?: 500);
             echo json_encode(['error' => $e->getMessage()]);
