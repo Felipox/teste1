@@ -120,7 +120,7 @@ class CategoriaController
 
             $use_case->execute($received_id);
 
-            http_response_code(200);
+            http_response_code(204);
             echo json_encode(["Sucesso: Categoria deletada com sucesso"]);
         }
         catch(Exception $e)

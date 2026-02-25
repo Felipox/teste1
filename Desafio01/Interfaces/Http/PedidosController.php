@@ -149,12 +149,13 @@ class PedidosController
 
             $order_repository = new MemoryPedidosRepository();
             $product_repository = new MemoryProdutoRepository();
-            $use_case = new DeletePedidosUseCase($order_repository, $product_repository);
+            $moviment_repository = new MemoryMovimentacaoRepository();
+            $use_case = new DeletePedidosUseCase($order_repository, $product_repository, $moviment_repository);
 
             $use_case->execute($received_id);
 
-            http_response_code(200);
-            echo json_encode(["Sucesso: Pedido deletada com sucesso"]);
+            http_response_code(204);
+            echo json_encode(["Sucesso: Pedido deletado com sucesso"]);
             }
         catch(Exception $e)
             {
